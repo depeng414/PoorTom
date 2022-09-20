@@ -1,3 +1,3 @@
-./.idea/**
-./PoorTom.iml
-./target/**
+.idea/
+PoorTom.iml
+target/
