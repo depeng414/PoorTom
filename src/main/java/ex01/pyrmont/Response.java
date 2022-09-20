@@ -38,10 +38,22 @@ public class Response {
         FileInputStream fis = null;
 
         try {
+            if (null == request.getUri()) {
+                String preh5 = "HTTP/1.1 200 ok\r\n" +
+                        "Content-Type: text/html\r\n" +
+                        "\r\n";
+                output.write(preh5.getBytes());
+                return;
+            }
+
             File file = new File(HttpServer.WEB_ROOT, request.getUri());
             if (file.exists()) {
                 fis = new FileInputStream(file);
                 int ch = fis.read(bytes, 0, BUFFER_SIZE);
+                String preh5 = "HTTP/1.1 200 ok\r\n" +
+                        "Content-Type: text/html\r\n" +
+                        "\r\n";
+                output.write(preh5.getBytes());
                 while (ch != -1) {
                     output.write(bytes, 0, ch);
                     ch = fis.read(bytes, 0, BUFFER_SIZE);

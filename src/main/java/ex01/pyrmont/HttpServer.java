@@ -61,7 +61,7 @@ public class HttpServer {
 
                 // 校验
                 // 是否是暂停命令的uri
-                shutdown = request.getUri().equals(SHUTDOWN_COMMAND);
+                shutdown = SHUTDOWN_COMMAND.equals(request.getUri());
             } catch (IOException e) {
                 e.printStackTrace();
             }
