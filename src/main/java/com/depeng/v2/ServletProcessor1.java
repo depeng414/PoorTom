@@ -1,4 +1,4 @@
-package ex02.pyrmont;
+package com.depeng.v2;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;

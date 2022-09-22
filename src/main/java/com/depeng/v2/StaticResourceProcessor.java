@@ -1,4 +1,4 @@
-package ex02.pyrmont;
+package com.depeng.v2;
 
 import java.io.IOException;
 

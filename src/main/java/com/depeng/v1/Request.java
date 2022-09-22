@@ -1,4 +1,4 @@
-package ex01.pyrmont;
+package com.depeng.v1;
 
 import java.io.IOException;
 import java.io.InputStream;

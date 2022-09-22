@@ -1,171 +1,204 @@
-package ex02.pyrmont;
+package com.depeng.v2;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 
 /**
- * @ClassName: RequestFacade
+ * @ClassName: Request
  * @Author: Yan Depeng
- * @Date: 2022/9/22 10:11
+ * @Date: 2022/9/21 11:50
  * @Version: 1.0.0
  */
-public class RequestFacade implements ServletRequest {
+public class Request implements ServletRequest {
 
-    private ServletRequest request = null;
+    private InputStream input;
+    private String uri;
 
-    public RequestFacade(ServletRequest request) {
-        this.request = request;
+    public Request(InputStream input) {
+        this.input = input;
     }
 
+    public String getUri() {
+        return uri;
+    }
+    private String parseUri(String requestString) {
+        int index1, index2;
+        index1 = requestString.indexOf(" ");
+        if (index1 != -1) {
+            index2 = requestString.indexOf(" ", index1 + 1);
+            if (index1 < index2)
+                return requestString.substring(index1 + 1, index2);
+        }
+        return null;
+    }
+
+    public void parse() {
+        // read a set of characters from socket
+        StringBuffer request = new StringBuffer(2048);
+        int i;
+        byte[] bytes = new byte[2048];
+        try {
+            i = input.read(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+            i = -1;
+        }
+        for (int j = 0; j < i; j++) {
+            request.append((char) bytes[j]);
+        }
+        System.out.println(request.toString());
+        uri = parseUri(request.toString());
+    }
     @Override
     public Object getAttribute(String s) {
-        return request.getAttribute(s);
+        return null;
     }
 
     @Override
     public Enumeration getAttributeNames() {
-        return request.getAttributeNames();
+        return null;
     }
 
     @Override
     public String getCharacterEncoding() {
-        return request.getCharacterEncoding();
+        return null;
     }
 
     @Override
     public void setCharacterEncoding(String s) throws UnsupportedEncodingException {
-        request.setCharacterEncoding(s);
+
     }
 
     @Override
     public int getContentLength() {
-        return request.getContentLength();
+        return 0;
     }
 
     @Override
     public String getContentType() {
-        return request.getContentType();
+        return null;
     }
 
     @Override
     public ServletInputStream getInputStream() throws IOException {
-        return request.getInputStream();
+        return null;
     }
 
     @Override
     public String getParameter(String s) {
-        return request.getParameter(s);
+        return null;
     }
 
     @Override
     public Enumeration getParameterNames() {
-        return request.getParameterNames();
+        return null;
     }
 
     @Override
     public String[] getParameterValues(String s) {
-        return request.getParameterValues(s);
+        return new String[0];
     }
 
     @Override
     public Map getParameterMap() {
-        return request.getParameterMap();
+        return null;
     }
 
     @Override
     public String getProtocol() {
-        return request.getProtocol();
+        return null;
     }
 
     @Override
     public String getScheme() {
-        return request.getScheme();
+        return null;
     }
 
     @Override
     public String getServerName() {
-        return request.getServerName();
+        return null;
     }
 
     @Override
     public int getServerPort() {
-        return request.getServerPort();
+        return 0;
     }
 
     @Override
     public BufferedReader getReader() throws IOException {
-        return request.getReader();
+        return null;
     }
 
     @Override
     public String getRemoteAddr() {
-        return request.getRemoteAddr();
+        return null;
     }
 
     @Override
     public String getRemoteHost() {
-        return request.getRemoteHost();
+        return null;
     }
 
     @Override
     public void setAttribute(String s, Object o) {
-        request.setAttribute(s, o);
+
     }
 
     @Override
     public void removeAttribute(String s) {
-        request.removeAttribute(s);
+
     }
 
     @Override
     public Locale getLocale() {
-        return request.getLocale();
+        return null;
     }
 
     @Override
     public Enumeration getLocales() {
-        return request.getLocales();
+        return null;
     }
 
     @Override
     public boolean isSecure() {
-        return request.isSecure();
+        return false;
     }
 
     @Override
     public RequestDispatcher getRequestDispatcher(String s) {
-        return request.getRequestDispatcher(s);
+        return null;
     }
 
     @Override
     public String getRealPath(String s) {
-        return request.getRealPath(s);
+        return null;
     }
 
     @Override
     public int getRemotePort() {
-        return request.getRemotePort();
+        return 0;
     }
 
     @Override
     public String getLocalName() {
-        return request.getLocalName();
+        return null;
     }
 
     @Override
     public String getLocalAddr() {
-        return request.getLocalAddr();
+        return null;
     }
 
     @Override
     public int getLocalPort() {
-        return request.getLocalPort();
+        return 0;
     }
 }

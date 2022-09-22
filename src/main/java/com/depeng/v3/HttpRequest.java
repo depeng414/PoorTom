@@ -1,4 +1,4 @@
-package ex02.pyrmont;
+package com.depeng.v3;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletInputStream;
@@ -7,56 +7,37 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
- * @ClassName: Request
+ * @ClassName: HttpRequest
+ * @Description: TODO
  * @Author: Yan Depeng
- * @Date: 2022/9/21 11:50
+ * @Date: 2022/9/22 17:45
  * @Version: 1.0.0
  */
-public class Request implements ServletRequest {
+public class HttpRequest implements ServletRequest {
 
     private InputStream input;
-    private String uri;
 
-    public Request(InputStream input) {
+    private HashMap<String, String> headers = new HashMap<>();
+    protected ArrayList cookies = new ArrayList();
+    protected ParameterMap parameterMap = null;
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public HttpRequest(InputStream input) {
         this.input = input;
     }
 
-    public String getUri() {
-        return uri;
-    }
-    private String parseUri(String requestString) {
-        int index1, index2;
-        index1 = requestString.indexOf(" ");
-        if (index1 != -1) {
-            index2 = requestString.indexOf(" ", index1 + 1);
-            if (index1 < index2)
-                return requestString.substring(index1 + 1, index2);
-        }
-        return null;
+    public String getRequestURI() {
+        // TODO
+        return "";
     }
 
-    public void parse() {
-        // read a set of characters from socket
-        StringBuffer request = new StringBuffer(2048);
-        int i;
-        byte[] bytes = new byte[2048];
-        try {
-            i = input.read(bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-            i = -1;
-        }
-        for (int j = 0; j < i; j++) {
-            request.append((char) bytes[j]);
-        }
-        System.out.println(request.toString());
-        uri = parseUri(request.toString());
-    }
     @Override
     public Object getAttribute(String s) {
         return null;
