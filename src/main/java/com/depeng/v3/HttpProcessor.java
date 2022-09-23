@@ -1,10 +1,9 @@
 package com.depeng.v3;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.rmi.ServerException;
 
 /**
  * @ClassName: HttpProcessor
@@ -23,6 +22,8 @@ public class HttpProcessor {
 
     private HttpRequest request;
     private HttpResponse response;
+
+    private RequestLine requestLine;
 
     public void process(Socket socket) {
         SocketInputStream input = null;
@@ -59,7 +60,22 @@ public class HttpProcessor {
 
     }
 
-    private void parseRequest(SocketInputStream input, OutputStream output) {
+    private void parseRequest(SocketInputStream input, OutputStream output)
+            throws ServerException {
+        // parse the incoming request line
+        input.readRequestLine(requestLine);
+        String method = new String(requestLine.method, 0, requestLine.methodEnd);
+        String uri = null;
+        String protocol = new String(requestLine.protocol, 0, requestLine.protocolEnd);
 
+        // validate the incoming request line
+        if (method.length() < 1) {
+            throw new ServerException("缺少HTTP请求方法名");
+        }
+        else if (requestLine.uriEnd < 1) {
+            throw new ServerException("缺少HTTP请求URI");
+        }
+
+        //
     }
 }

@@ -26,7 +26,9 @@ public class SocketInputStream extends InputStream {
         this.scoopSize = scoopSize;
     }
 
-    public void readRequestLine()
+    public void readRequestLine(RequestLine requestLine) {
+        // TODO
+    }
 
     @Override
     public int read() throws IOException {
